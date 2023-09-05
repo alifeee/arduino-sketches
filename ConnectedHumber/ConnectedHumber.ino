@@ -34,7 +34,6 @@ void showText(Panel &p, char *msg)
 void setup()
 {
   SPI.begin();
-
   topRow.begin();
   bottomRow.begin();
 
