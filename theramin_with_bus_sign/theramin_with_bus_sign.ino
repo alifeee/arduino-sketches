@@ -2,6 +2,12 @@
  */
 
 #include <Zforce.h>
+#include <CH_AS1100.h>
+
+// panels
+#define PANEL1_LOAD_PIN 7
+#define PANEL2_LOAD_PIN 5
+#define NUM_CHIPS 32
 
 // IMPORTANT: change "1" to assigned GPIO digital pin for dataReady signal in your setup:
 #define DATA_READY_PIN 2
@@ -23,12 +29,18 @@ int note;
 unsigned long time_of_tone_start;
 unsigned long time_now;
 
+Panel topRow = Panel(PANEL1_LOAD_PIN, NUM_CHIPS);
+Panel bottomRow = Panel(PANEL2_LOAD_PIN, NUM_CHIPS);
+
 void setup()
 {
   Serial.begin(115200);
   while (!Serial)
   {
   };
+
+  topRow.begin();
+  bottomRow.begin();
 
   Serial.println("zforce start");
   zforce.Start(DATA_READY_PIN);
@@ -67,6 +79,8 @@ void loop()
       note = MIN_TONE + fraction * (MAX_TONE - MIN_TONE);
 
       tone(SPEAKER_PIN, note);
+      fillFraction(topRow, fraction);
+      fillFraction(bottomRow, fraction);
     }
     else if (touch->type == MessageType::BOOTCOMPLETETYPE)
     {
@@ -82,7 +96,26 @@ void loop()
   if ((time_now - time_of_tone_start) > 50)
   {
     noTone(SPEAKER_PIN);
+    // topRow.clearDisplay();
+    // topRow.display();
+    // bottomRow.clearDisplay();
+    // bottomRow.display();
   }
+}
+
+void fillFraction(Panel &p, float fraction) {
+  int max = NUM_CHIPS * 6;
+  for (int i = 0; i < max; i++) {
+    for (int row = 0; row < 9; row++) {
+      if (((float)i / (float)max) < fraction) {
+        p.setPixel(i, row, 1);
+      }
+      else {
+        p.setPixel(i, row, 0);
+      }
+    }
+  }
+  p.display();
 }
 
 // Write some configuration parameters to sensor and enable sensor.
@@ -94,6 +127,23 @@ void loop()
 void init_sensor()
 {
   Message *msg = nullptr;
+
+  // Send and read ReverseY
+  zforce.ReverseY(true);
+
+  do
+  {
+    msg = zforce.GetMessage();
+  } while (msg == nullptr);
+
+  if (msg->type == MessageType::REVERSEYTYPE)
+  {
+    Serial.println("Received ReverseY Response");
+    Serial.print("Message type is: ");
+    Serial.println((int)msg->type);
+  }
+
+  zforce.DestroyMessage(msg);
 
   // Send and read Enable
 
