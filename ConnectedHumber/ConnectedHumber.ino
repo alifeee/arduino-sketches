@@ -41,5 +41,4 @@ void loop()
   topRow.display();
   bottomRow.scrollRows(-1, true); // wrap scroll right to left
   bottomRow.display();
-  // delay(100);
 }
