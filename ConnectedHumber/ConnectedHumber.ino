@@ -31,7 +31,7 @@ void setup()
   topRow.begin();
   bottomRow.begin();
 
-  showText(topRow, (char *)"Hull Makerspace");
+  showText(topRow, (char *)"Hull Makerspace!");
   showText(bottomRow, (char *)"@alifeee");
 }
 
