@@ -1,14 +1,15 @@
 
 /*
  * SPI test
- * 
+ *
  */
 #include <SPI.h>
 
 #define DATA_PIN 11
 #define CLK_PIN 13
 
-void setup(){
+void setup()
+{
   SPI.begin();
 }
 
@@ -19,6 +20,3 @@ void loop()
   SPI.endTransaction();
   delay(100);
 }
-
-
-
