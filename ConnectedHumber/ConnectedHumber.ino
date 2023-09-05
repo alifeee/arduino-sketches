@@ -3,24 +3,19 @@
  * Test program for bus sign library
  *
  */
-#include <Adafruit_GFX.h>
 #include <CH_AS1100.h>
-#include <SPI.h>
 
-// just 3 digital ports to control
-#define DATA_PIN 11
-#define CLK_PIN 13
+// top panel
 #define LOAD_PIN 7
 
 // bottom panel
-#define DATA_PIN_2 11
-#define CLK_PIN_2 13
 #define LOAD_PIN_2 5
 
+// panel length
 #define NUM_CHIPS 32
 
-Panel topRow = Panel(DATA_PIN, CLK_PIN, LOAD_PIN, NUM_CHIPS);
-Panel bottomRow = Panel(DATA_PIN_2, CLK_PIN_2, LOAD_PIN_2, NUM_CHIPS);
+Panel topRow = Panel(LOAD_PIN, NUM_CHIPS);
+Panel bottomRow = Panel(LOAD_PIN_2, NUM_CHIPS);
 
 void showText(Panel &p, char *msg)
 {
@@ -33,7 +28,6 @@ void showText(Panel &p, char *msg)
 
 void setup()
 {
-  SPI.begin();
   topRow.begin();
   bottomRow.begin();
 
