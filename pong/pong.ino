@@ -1,3 +1,8 @@
+/*
+ * The classic game Pong! using Hull Bus Signs (1) and Neonode touch sensors (2)
+ * (1): see https://github.com/ConnectedHumber/Bus-Terminal-Signs
+ * (2): see https://github.com/alifeee/neonode-touch
+ */
 #include <Zforce.h>
 #include <CH_AS1100.h>
 
