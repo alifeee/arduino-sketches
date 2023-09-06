@@ -1,0 +1,71 @@
+# constants
+screen size pixels (x, y) int
+sensor size pixels (x, y) int
+paddle size (x, y) int
+ball initial position (x, y) float
+ball initial velocity (x, y) float
+
+# variables
+player left pos (y) float
+player right pos (y) float
+ball pos (x, y) float
+ball velocity (x, y) float
+player left score int
+player right score int
+
+# computables
+delta (from millis() or micros())
+
+# functions
+draw paddles
+ draw pixel for size
+draw ball
+ draw 2x2 pixels? round position
+draw score
+get player from touch event (past midpoint)
+get y fraction from touch event
+
+# initial
+draw score to bottom panel
+
+# game loop (every frame)
+compute delta
+deal with touch events
+ for each event
+  get player
+  get y
+  set player position to y
+deal with ball
+ work out ball's next position
+ if off top of screen
+  reverse y velocity
+  set position to top of screen
+ if off bottom of screen
+  same as above but swapped
+ if off left of screen
+  if y is within left player paddle y
+   reverse x velocity
+   set position to left of screen
+  else
+   reset ball position to initial position + velocity
+   increment player right score
+   draw new score to bottom panel
+ if off right of screen
+  do same as above but for right player
+ else
+  add velocity to ball position
+clear pixels
+draw paddles
+draw ball
+send display()
+
+
+
+
+
+
+
+
+
+
+
