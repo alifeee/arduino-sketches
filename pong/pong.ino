@@ -137,6 +137,7 @@ void loop()
       ball_vy = getRandomVelocity();
       player_right_score += 1;
       delay(500);
+      return;
     }
   }
   // off right edge
@@ -156,6 +157,7 @@ void loop()
       ball_vy = getRandomVelocity();
       player_left_score += 1;
       delay(500);
+      return;
     }
   }
   else
