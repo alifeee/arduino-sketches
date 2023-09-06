@@ -105,44 +105,6 @@ void loop()
   delta_s = (float)delta_us / 1000000;
   time_of_last_frame = micros();
 
-  // get touch
-  touch = zforce.GetMessage();
-  if (touch != nullptr)
-  {
-    if (touch->type == MessageType::TOUCHTYPE)
-    {
-      // for touch in touches
-      for (uint8_t i = 0; i < ((TouchMessage *)touch)->touchCount; i++)
-      {
-        TouchData touchData = ((TouchMessage *)touch)->touchData[i];
-        printTouchInfo(touchData);
-        int player = getPlayer(touchData);
-        float y_fraction = getYFraction(touchData);
-        if (false)
-        {
-          Serial.print("player ");
-          Serial.print(player);
-          Serial.print(" at ");
-          Serial.println(y_fraction);
-        }
-        if (player == 0)
-        {
-          player_left_paddle_y = y_fraction;
-        }
-        else if (player == 1)
-        {
-          player_right_paddle_y = y_fraction;
-        }
-      }
-    }
-    else if (touch->type == MessageType::BOOTCOMPLETETYPE)
-    {
-      // reinitialize on boot complete message
-      init_sensor();
-    }
-    zforce.DestroyMessage(touch);
-  }
-
   // ball logic
   float ball_next_x = ball_x + (ball_vx * delta_s);
   float ball_next_y = ball_y + (ball_vy * delta_s);
@@ -202,6 +164,45 @@ void loop()
     ball_y += ball_vy * delta_s;
   }
 
+  // get touch
+  touch = zforce.GetMessage();
+  if (touch != nullptr)
+  {
+    if (touch->type == MessageType::TOUCHTYPE)
+    {
+      // for touch in touches
+      for (uint8_t i = 0; i < ((TouchMessage *)touch)->touchCount; i++)
+      {
+        TouchData touchData = ((TouchMessage *)touch)->touchData[i];
+        printTouchInfo(touchData);
+        int player = getPlayer(touchData);
+        float y_fraction = getYFraction(touchData);
+        if (false)
+        {
+          Serial.print("player ");
+          Serial.print(player);
+          Serial.print(" at ");
+          Serial.println(y_fraction);
+        }
+        if (player == 0)
+        {
+          player_left_paddle_y = y_fraction;
+        }
+        else if (player == 1)
+        {
+          player_right_paddle_y = y_fraction;
+        }
+      }
+    }
+    else if (touch->type == MessageType::BOOTCOMPLETETYPE)
+    {
+      // reinitialize on boot complete message
+      init_sensor();
+    }
+    zforce.DestroyMessage(touch);
+  }
+
+  // display
   topRow.clearDisplay();
   drawPaddles(topRow, player_left_paddle_y, player_right_paddle_y);
   drawBall(topRow, ball_x, ball_y);
