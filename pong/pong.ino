@@ -25,7 +25,7 @@ const int PIXELS_WIDTH = PIXELS_RIGHT - PIXELS_LEFT;
 #define PADDLE_X 2
 #define PADDLE_Y 3 // must be odd
 const int PADDLE_DY = (PADDLE_Y - 1) / 2;
-#define BALL_INIT_X 96
+const int BALL_INIT_X = PIXELS_LEFT + (PIXELS_RIGHT - PIXELS_LEFT) / 2;
 #define BALL_INIT_Y 4
 #define BALL_INIT_V_X 20
 #define BALL_INIT_V_Y 10
