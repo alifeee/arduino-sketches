@@ -12,8 +12,8 @@
 #define TOP_LOAD_PIN 7
 #define BOTTOM_LOAD_PIN 5
 #define NUM_CHIPS 32
-#define PIXELS_LEFT 50
-#define PIXELS_RIGHT 150 // max 192
+#define PIXELS_LEFT 60
+#define PIXELS_RIGHT 120 // max 192
 #define TOTAL_WIDTH 192
 #define PIXELS_TOP 8 // max 8
 #define PIXELS_BOTTOM 0
