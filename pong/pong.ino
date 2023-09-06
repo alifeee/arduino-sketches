@@ -312,6 +312,20 @@ void init_sensor()
   }
   zforce.DestroyMessage(msg);
 
+  // Send and read ReportedTouches
+  zforce.ReportedTouches(2);
+  do
+  {
+    msg = zforce.GetMessage();
+  } while (msg == nullptr);
+  if (msg->type == MessageType::REPORTEDTOUCHESTYPE)
+  {
+    Serial.println("Received Reported Touches Response");
+    Serial.print("Message type is: ");
+    Serial.println((int)msg->type);
+  }
+  zforce.DestroyMessage(msg);
+
   // Send and read Enable
   zforce.Enable(true);
   do
