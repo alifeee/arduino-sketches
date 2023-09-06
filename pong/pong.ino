@@ -132,7 +132,7 @@ void loop()
     else
     {
       ball_x = BALL_INIT_X;
-      ball_y = BALL_INIT_X;
+      ball_y = BALL_INIT_Y;
       ball_vx = BALL_INIT_V_X;
       ball_vy = getRandomVelocity();
       player_right_score += 1;
@@ -152,7 +152,7 @@ void loop()
     else
     {
       ball_x = BALL_INIT_X;
-      ball_y = BALL_INIT_X;
+      ball_y = BALL_INIT_Y;
       ball_vx = BALL_INIT_V_X;
       ball_vy = getRandomVelocity();
       player_left_score += 1;
