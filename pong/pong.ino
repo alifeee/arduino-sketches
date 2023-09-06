@@ -193,7 +193,10 @@ bool inRange(int min, int max, float val)
 
 void showText(Panel &p, char *msg)
 {
-  p.setCursor(0, 0);
+  int str_length = strlen(msg);
+  int ppc = 6; // pixels per text character
+  int midpoint = TOTAL_WIDTH / 2;
+  p.setCursor(midpoint - ppc * (str_length / 2), 0);
   p.setTextColor(1);
   p.setTextSize(1); // pixel size multiplier
   p.println(msg);
