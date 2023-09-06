@@ -14,6 +14,7 @@
 #define NUM_CHIPS 32
 #define PIXELS_LEFT 50
 #define PIXELS_RIGHT 150 // max 192
+#define TOTAL_WIDTH 192
 #define PIXELS_TOP 8 // max 8
 #define PIXELS_BOTTOM 0
 const int PIXELS_HEIGHT = PIXELS_TOP - PIXELS_BOTTOM;
@@ -23,6 +24,7 @@ const int PIXELS_WIDTH = PIXELS_RIGHT - PIXELS_LEFT;
 // constants
 #define PADDLE_X 2
 #define PADDLE_Y 3 // must be odd
+const int PADDLE_DY = (PADDLE_Y - 1) / 2;
 #define BALL_INIT_X 96
 #define BALL_INIT_Y 4
 #define BALL_INIT_V_X 20
@@ -62,8 +64,12 @@ void setup()
   zforce.Start(NEONODE_DATA_READY_PIN);
   init_sensor();
 
-  Serial.println("show text");
-  showText(bottomRow, (char *)"Pong! v0.1.0");
+  // showText(bottomRow, (char *)"Pong! v0.1.0");
+  // bottomRow.display();
+  // delay(2000);
+  // bottomRow.clearDisplay();
+  // drawScore(bottomRow, 0, 0);
+  // bottomRow.display();
 }
 
 void loop()
@@ -89,7 +95,7 @@ void loop()
       for (uint8_t i = 0; i < ((TouchMessage *)touch)->touchCount; i++)
       {
         TouchData touchData = ((TouchMessage *)touch)->touchData[i];
-        // printTouchInfo(touchData);
+        printTouchInfo(touchData);
         int player = getPlayer(touchData);
         float y_fraction = getYFraction(touchData);
         if (false)
@@ -135,7 +141,7 @@ void loop()
   // off left edge
   else if (ball_next_x < PIXELS_LEFT + PADDLE_X)
   {
-    if (inRange(player_left_paddle_y * PIXELS_HEIGHT - PADDLE_Y, player_left_paddle_y * PIXELS_HEIGHT + PADDLE_Y, ball_next_y))
+    if (inRange(player_left_paddle_y * PIXELS_HEIGHT - PADDLE_DY, player_left_paddle_y * PIXELS_HEIGHT + PADDLE_DY, ball_next_y))
     {
       ball_vx *= -1;
       ball_x = PIXELS_LEFT + PADDLE_X;
@@ -146,12 +152,13 @@ void loop()
       ball_y = BALL_INIT_X;
       ball_vx = BALL_INIT_V_X;
       ball_vy = BALL_INIT_V_Y;
+      player_right_score += 1;
     }
   }
   // off right edge
   else if (ball_next_x > PIXELS_RIGHT - PADDLE_X)
   {
-    if (inRange(player_right_paddle_y * PIXELS_HEIGHT - PADDLE_Y, player_right_paddle_y * PIXELS_HEIGHT + PADDLE_Y, ball_next_y))
+    if (inRange(player_right_paddle_y * PIXELS_HEIGHT - PADDLE_DY, player_right_paddle_y * PIXELS_HEIGHT + PADDLE_DY, ball_next_y))
     {
       ball_vx *= -1;
       ball_x = PIXELS_RIGHT - PADDLE_X;
@@ -162,6 +169,7 @@ void loop()
       ball_y = BALL_INIT_X;
       ball_vx = BALL_INIT_V_X;
       ball_vy = BALL_INIT_V_Y;
+      player_left_score += 1;
     }
   }
   else
@@ -173,6 +181,7 @@ void loop()
   topRow.clearDisplay();
   drawPaddles(topRow, player_left_paddle_y, player_right_paddle_y);
   drawBall(topRow, ball_x, ball_y);
+  drawScore(topRow, player_left_score, player_right_score);
   topRow.display();
 }
 
@@ -188,7 +197,20 @@ void showText(Panel &p, char *msg)
   p.setTextColor(1);
   p.setTextSize(1); // pixel size multiplier
   p.println(msg);
-  p.display();
+}
+
+void drawScore(Panel &p, int score_left, int score_right) {
+  int offset = 2;
+  int ppc = 6; // pixels per text character
+  p.setTextColor(1);
+  p.setTextSize(1); // pixel size multiplier
+
+  int n_digits_left = score_left / 10;
+  p.setCursor(PIXELS_LEFT - offset - ppc * (n_digits_left + 1), 0);
+  p.print(score_left);
+  
+  p.setCursor(PIXELS_RIGHT + offset, 0);
+  p.print(score_right);
 }
 
 void drawPaddles(Panel &p, float left_y, float right_y)
