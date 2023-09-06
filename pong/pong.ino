@@ -174,6 +174,7 @@ void loop()
       ball_vx = BALL_INIT_V_X;
       ball_vy = BALL_INIT_V_Y;
       player_right_score += 1;
+      delay(500);
     }
   }
   // off right edge
@@ -192,6 +193,7 @@ void loop()
       ball_vx = BALL_INIT_V_X;
       ball_vy = BALL_INIT_V_Y;
       player_left_score += 1;
+      delay(500);
     }
   }
   else
