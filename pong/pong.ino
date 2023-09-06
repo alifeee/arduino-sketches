@@ -134,7 +134,7 @@ void loop()
       ball_x = BALL_INIT_X;
       ball_y = BALL_INIT_X;
       ball_vx = BALL_INIT_V_X;
-      ball_vy = BALL_INIT_V_Y;
+      ball_vy = getRandomVelocity();
       player_right_score += 1;
       delay(500);
     }
@@ -153,7 +153,7 @@ void loop()
       ball_x = BALL_INIT_X;
       ball_y = BALL_INIT_X;
       ball_vx = BALL_INIT_V_X;
-      ball_vy = BALL_INIT_V_Y;
+      ball_vy = getRandomVelocity();
       player_left_score += 1;
       delay(500);
     }
@@ -260,6 +260,14 @@ void drawPaddles(Panel &p, float left_y, float right_y)
 void drawBall(Panel &p, float x, float y)
 {
   p.setPixel(x, y, 1);
+}
+
+float getRandomVelocity()
+{
+  // between -10 and 10
+  int nearly_random_number = millis() % 6;
+  Serial.println((nearly_random_number - 2.5) * 2);
+  return (nearly_random_number - 4.5) * 2;
 }
 
 void init_sensor()
