@@ -236,8 +236,16 @@ void drawScore(Panel &p, int score_left, int score_right)
   p.setTextColor(1);
   p.setTextSize(1); // pixel size multiplier
 
-  int n_digits_left = score_left / 10;
-  p.setCursor(PIXELS_LEFT - offset - ppc * (n_digits_left + 1), 0);
+  int left_offset = 0;
+  if (score_left >= 10)
+  {
+    left_offset++;
+  }
+  if (score_left >= 100)
+  {
+    left_offset++;
+  }
+  p.setCursor(PIXELS_LEFT - offset - ppc * (left_offset + 1), 0);
   p.print(score_left);
 
   p.setCursor(PIXELS_RIGHT + offset, 0);
