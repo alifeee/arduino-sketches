@@ -29,6 +29,7 @@ const int PADDLE_DY = (PADDLE_Y - 1) / 2;
 #define BALL_INIT_Y 4
 #define BALL_INIT_V_X 20
 #define BALL_INIT_V_Y 10
+#define BALL_SPEEDUP_RATE 1.1
 // variables
 unsigned long time_of_last_frame = 0;
 unsigned long time_of_current_frame = 0;
@@ -162,7 +163,8 @@ void loop()
   {
     if (inRange(player_left_paddle_y * PIXELS_HEIGHT - PADDLE_DY, player_left_paddle_y * PIXELS_HEIGHT + PADDLE_DY, ball_next_y))
     {
-      ball_vx *= -1;
+      ball_vx *= -BALL_SPEEDUP_RATE;
+      ball_vy *= BALL_SPEEDUP_RATE;
       ball_x = PIXELS_LEFT + PADDLE_X;
     }
     else
@@ -179,7 +181,8 @@ void loop()
   {
     if (inRange(player_right_paddle_y * PIXELS_HEIGHT - PADDLE_DY, player_right_paddle_y * PIXELS_HEIGHT + PADDLE_DY, ball_next_y))
     {
-      ball_vx *= -1;
+      ball_vx *= -BALL_SPEEDUP_RATE;
+      ball_vy *= BALL_SPEEDUP_RATE;
       ball_x = PIXELS_RIGHT - PADDLE_X;
     }
     else
