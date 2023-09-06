@@ -161,7 +161,7 @@ void loop()
   // off left edge
   else if (ball_next_x < PIXELS_LEFT + PADDLE_X)
   {
-    if (inRange(player_left_paddle_y * PIXELS_HEIGHT - PADDLE_DY, player_left_paddle_y * PIXELS_HEIGHT + PADDLE_DY, ball_next_y))
+    if (inRange(player_left_paddle_y * PIXELS_HEIGHT - PADDLE_DY, player_left_paddle_y * PIXELS_HEIGHT + PADDLE_DY, ball_y))
     {
       ball_vx *= -BALL_SPEEDUP_RATE;
       ball_vy *= BALL_SPEEDUP_RATE;
@@ -179,7 +179,7 @@ void loop()
   // off right edge
   else if (ball_next_x > PIXELS_RIGHT - PADDLE_X)
   {
-    if (inRange(player_right_paddle_y * PIXELS_HEIGHT - PADDLE_DY, player_right_paddle_y * PIXELS_HEIGHT + PADDLE_DY, ball_next_y))
+    if (inRange(player_right_paddle_y * PIXELS_HEIGHT - PADDLE_DY, player_right_paddle_y * PIXELS_HEIGHT + PADDLE_DY, ball_y))
     {
       ball_vx *= -BALL_SPEEDUP_RATE;
       ball_vy *= BALL_SPEEDUP_RATE;
