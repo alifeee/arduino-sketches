@@ -60,16 +60,35 @@ void setup()
   topRow.begin();
   bottomRow.begin();
 
+  showText(bottomRow, (char *)"Pong! v0.1.0");
+  bottomRow.display();
+
+  // topRow.clearDisplay();
+  // showText(topRow, (char *)"REMOVE HANDS FROM SENSOR... 3");
+  // topRow.display();
+  // delay(1000);
+  // topRow.clearDisplay();
+  // showText(topRow, (char *)"REMOVE HANDS FROM SENSOR... 2");
+  // topRow.display();
+  // delay(1000);
+  // topRow.clearDisplay();
+  // showText(topRow, (char *)"REMOVE HANDS FROM SENSOR... 1");
+  // topRow.display();
+  // delay(1000);
+
+  // topRow.clearDisplay();
+  // showText(topRow, (char *)"CALIBRATING...");
+  // topRow.display();
+
   Serial.println("init sensor");
   zforce.Start(NEONODE_DATA_READY_PIN);
   init_sensor();
+  // delay(1000);
 
-  // showText(bottomRow, (char *)"Pong! v0.1.0");
-  // bottomRow.display();
-  // delay(2000);
-  // bottomRow.clearDisplay();
-  // drawScore(bottomRow, 0, 0);
-  // bottomRow.display();
+  // topRow.clearDisplay();
+  // showText(topRow, (char *)"BEGIN!");
+  // topRow.display();
+  // delay(1000);
 }
 
 void loop()
@@ -202,7 +221,8 @@ void showText(Panel &p, char *msg)
   p.println(msg);
 }
 
-void drawScore(Panel &p, int score_left, int score_right) {
+void drawScore(Panel &p, int score_left, int score_right)
+{
   int offset = 2;
   int ppc = 6; // pixels per text character
   p.setTextColor(1);
@@ -211,7 +231,7 @@ void drawScore(Panel &p, int score_left, int score_right) {
   int n_digits_left = score_left / 10;
   p.setCursor(PIXELS_LEFT - offset - ppc * (n_digits_left + 1), 0);
   p.print(score_left);
-  
+
   p.setCursor(PIXELS_RIGHT + offset, 0);
   p.print(score_right);
 }
