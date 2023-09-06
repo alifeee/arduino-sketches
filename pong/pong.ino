@@ -61,7 +61,7 @@ void setup()
   topRow.begin();
   bottomRow.begin();
 
-  showText(bottomRow, (char *)"Pong! v0.1.0");
+  showText(bottomRow, (char *)"Pong! v0.2.0");
   bottomRow.display();
 
   // topRow.clearDisplay();
